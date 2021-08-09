@@ -10,7 +10,7 @@
     <meta name="description" content="欢迎来到我的博客">
   
   
-    <meta name="keywords" content="blog 前端 博客 JS js">
+    <meta name="keywords" content="blog 前端 博客 JS js 永不言败">
   
   
     <link rel="alternate" href="/atom.xml" title="永不言败" type="application/atom+xml">
@@ -176,7 +176,7 @@
 </ul>
 <p>这一次的记录非常重要，它为以后浏览器要不要去请求服务器提供了依据。</p>
 <p>之后当客户端收准备再次请求同样的地址时，它突然想起了一件事：我需要的东西在不在缓存里呢？</p>
-<p><img src="/./cache/cache1.image"></p>
+<p><img src="/images/cache1.png" alt="img"></p>
 <p>判断缓存是否有效就是通过把<code>max-age + Date</code>，得到一个过期时间，看看这个过期时间是否大于当前时间，如果是，则表示缓存还没有过期，仍然有效，如果不是，则表示缓存失效。</p>
 <h4 id="协商缓存"><a href="#协商缓存" class="headerlink" title="协商缓存"></a>协商缓存</h4><p>一旦发现缓存无效，它<strong>并不会简单的把缓存删除</strong>，而是抱着一丝希望，想问问服务器，我<strong>这个缓存还能继续使用吗</strong>？</p>
 <p>于是，浏览器向服务器发出了一个<strong>带缓存的请求</strong></p>
@@ -189,7 +189,7 @@
 <li><strong>缓存失效：</strong>那么非常简单，服务器再次给予一个正常的响应（响应码<code>200</code> 带响应体），同时可以附带上新的缓存指令，浏览器缓存新的内容</li>
 <li><strong>缓存有效：</strong>服务器返回304重定向，并且响应头带上新的缓存指令，浏览器作出相应缓存动作。</li>
 </ul>
-<p><img src="/cache/fd3db09a1cc04f7999eb14b0a021eefc~tplv-k3u1fbpfcp-watermark-20210802105024956.image" alt="img"></p>
+<p><img src="/images/cache2.png" alt="img"></p>
 <h3 id="补充（关键字段值）"><a href="#补充（关键字段值）" class="headerlink" title="补充（关键字段值）"></a>补充（关键字段值）</h3><h4 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h4><p>在上述的讲解中，<code>Cache-Control</code>是服务器向客户端响应的一个消息头，它提供了一个<code>max-age</code>用于指定缓存时间。</p>
 <p>实际上，<code>Cache-Control</code>还可以设置下面一个或多个值：</p>
 <ul>
