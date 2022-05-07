@@ -142,6 +142,8 @@
 <h3 id="前端路由"><a href="#前端路由" class="headerlink" title="前端路由"></a>前端路由</h3><p><strong>SPA，即单页面应用(Single Page Application)。所谓单页 Web 应用，就是只有一张 Web 页面的应用。单页应用程序 (SPA) 是加载单个 HTML 页面并在用户与应用程序交互时动态更新该页面的 Web 应用程序。浏览器一开始会加载必需的 HTML 、 CSS 和 JavaScript ，所有的操作都在这张页面上完成，都由 JavaScript 来控制。</strong></p>
 <p><strong>前端路由的核心是：尽可能的减少因改变视图的而向后端发出页面请求</strong></p>
 <p><strong>对于现代开发的项目来说，稍微复杂一点的 SPA ，都需要用到路由。而 vue-router 正是 vue 的路由标配，且 vue-router 有两种模式： hash 和 history 。</strong><br><br></p>
+<span id="more"></span>
+
 <h3 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h3><p>Hash模式很容易分辨，在 URL 上能明显看到#号拼接，#号后拼接的就是路由路径，当#号后的 URL 部分发生变化，浏览器并不会重新发送请求，而是会触发<code>onhashchange</code>事件</p>
 <h4 id="Hash原理"><a href="#Hash原理" class="headerlink" title="Hash原理"></a>Hash原理</h4><p>Hash模式是通过<code>window.onhashchange</code>的方式来监听<code>hash</code>的改变，借此实现无刷新的页面跳转</p>
 <h4 id="Hash特点"><a href="#Hash特点" class="headerlink" title="Hash特点"></a>Hash特点</h4><ul>
