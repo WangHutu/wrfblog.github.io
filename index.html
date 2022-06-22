@@ -217,6 +217,64 @@
 </article>
 
 
+  <article id="post-es6" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/06/22/es6/">ES6的应用</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2022-06-22T02:34:26.000Z" itemprop="datePublished">2022年06月22日</time>
+</span>
+      
+      
+      
+<a href="/2022/06/22/es6/#comments" class="article-comment-link">
+  
+  <i class="fa fa-commt"></i>
+  留言
+</a>
+
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <br>
+
+<h3 id="对象取值-解构赋值"><a href="#对象取值-解构赋值" class="headerlink" title="对象取值 - 解构赋值"></a>对象取值 - 解构赋值</h3><p><strong>取值在写代码中非常常见，比如从obj中取值</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  <span class="attr">a</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">b</span>: <span class="number">2</span>,</span><br><span class="line">  <span class="attr">c</span>: <span class="number">3</span>,</span><br><span class="line">  <span class="attr">d</span>: <span class="number">4</span>,</span><br><span class="line">  <span class="attr">e</span>: <span class="number">5</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 不推荐方法</span></span><br><span class="line"><span class="keyword">const</span> a = obj.a;</span><br><span class="line"><span class="keyword">const</span> b = obj.b;</span><br><span class="line"><span class="keyword">const</span> c = obj.c;</span><br><span class="line"><span class="keyword">const</span> d = obj.d;</span><br><span class="line"><span class="keyword">const</span> e = obj.e;</span><br><span class="line"><span class="keyword">const</span> f = obj.a + obj.d;</span><br><span class="line"><span class="keyword">const</span> g = obj.c + obj.e;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ES6的方法，简洁代码</span></span><br><span class="line"><span class="keyword">const</span> &#123;a, b, c, d, e&#125; = obj</span><br><span class="line"><span class="keyword">const</span> f = a + d;</span><br><span class="line"><span class="keyword">const</span> g = c + e</span><br><span class="line"></span><br><span class="line"><span class="comment">// 进阶，如果想创建的变量名和对象的属性名不一致的情况</span></span><br><span class="line"><span class="keyword">const</span> &#123;<span class="attr">a</span>:a1&#125; = obj</span><br><span class="line"><span class="built_in">console</span>.log(a1) <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 补充</span></span><br><span class="line"><span class="comment">// ES6的解构赋值，解构的对象不能为 `undefined` `null` 否则会报错，所以要给被解构的对象一个默认值</span></span><br><span class="line"><span class="keyword">const</span> &#123;a, b, c, d, e&#125; = obj || &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="合并数据-扩展运算符"><a href="#合并数据-扩展运算符" class="headerlink" title="合并数据 - 扩展运算符"></a>合并数据 - 扩展运算符</h3><p><strong>合并两个数组或者合并两个对象，在写代码中也经常遇到</strong></p>
+      
+    </div>
+    <footer class="article-footer">
+      
+        
+        <p class="article-more-link">
+          <a href="/2022/06/22/es6/#more">阅读全文</a>
+        </p>
+      
+      
+      
+    </footer>
+  </div>
+</article>
+
+
   <article id="post-hash" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-inner">
     
@@ -579,6 +637,10 @@
       <ul>
         
           <li>
+            <a href="/2022/06/22/es6/">ES6的应用</a>
+          </li>
+        
+          <li>
             <a href="/2022/05/06/hash/">Hash &amp; History</a>
           </li>
         
@@ -592,10 +654,6 @@
         
           <li>
             <a href="/2021/08/25/scope/">作用域与执行上下文</a>
-          </li>
-        
-          <li>
-            <a href="/2021/08/17/http/">http详解</a>
           </li>
         
       </ul>
@@ -620,7 +678,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title"><i class="fa fa-archive"></i> 归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年05月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021年10月</a><span class="archive-list-count">7</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年06月</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021年10月</a><span class="archive-list-count">7</span></li></ul>
     </div>
   </div>
 
