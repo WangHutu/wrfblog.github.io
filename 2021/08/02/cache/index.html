@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>浏览器缓存策略 | 永不言败</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+    <meta name="description" content="欢迎来到我的博客">
+  
+  
+    <meta name="keywords" content="blog 前端 博客 JS js 永不言败">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="永不言败" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+    
+<link rel="stylesheet" href="/localshare/css/share.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">永不言败</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">为了更好的未来拼命努力，争取一种意义非凡的胜利</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/."><i class="fa fa-home"></i> 首页</a>
+        
+          <a class="main-nav-link" href="/archives/"><i class="fa fa-archive"></i> 归档</a>
+        
+          <a class="main-nav-link" href="/about/"><i class="fa fa-user"></i> 关于</a>
+        
+      </nav>
+    </div>
+    <div id="search-form">
+      <div id="result-mask" class="hide"></div>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label>
+      <div id="result-wrap" class="hide">
+        <div id="search-result"></div>
+      </div>
+      <div class="hide">
+        <template id="search-tpl">
+          <div class="item">
+            <a href="/{path}" title="{title}">
+              <div class="title">{title}</div>
+              <div class="time">{date}</div>
+              <div class="tags">{tags}</div>
+            </a>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-cache" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      浏览器缓存策略
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2021-08-02T02:04:36.000Z" itemprop="datePublished">2021年08月02日</time>
+</span>
+      
+      
+        <span class="article-views">
+  <i class="fa fa-views"></i>
+  <i id="busuanzi_container_page_pv">
+      <i id="busuanzi_value_page_pv"></i>
+  </i>
+</span>
+
+      
+      
+<a href="/2021/08/02/cache/#comments" class="article-comment-link">
+  
+    
+    
+    
+    
+    
+  
+  <i class="fa fa-commt"></i>
+  留言
+</a>
+
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><strong>面试的时候经常被问到浏览器的缓存策略；浏览器缓存，可用于优化用户体验，无论在节省带宽、提高加载和渲染速度、减少网络阻塞，以及提高用户体验上，都发挥着很重要的作用。</strong></p>
+<p><em>通过google，百度大法，搜索一些知识点，写在这里作为笔记</em></p>
+<span id="more"></span>
+
+
+<p><strong>当输入网址，浏览器的缓存过程如下：</strong></p>
+<ul>
+<li>开始加载，域名解析，DNS缓存</li>
+<li>本地缓存（memory缓存）</li>
+<li>Http缓存（强缓存和协商缓存）</li>
+<li>服务端缓存（cdn缓存）</li>
+</ul>
+<h3 id="DNS缓存"><a href="#DNS缓存" class="headerlink" title="DNS缓存"></a>DNS缓存</h3><p><em>DNS全称 Domain Name System ,即域名系统。当用户输入url后，该数据库可映射出对应的IP地址，使用户更方便的访问互联网，而不用去记住能够被机器直接读取的IP数串。</em></p>
+<p><strong>DNS缓存过程</strong></p>
+<ul>
+<li>首先搜索浏览器自身的DNS缓存,如果存在，则域名解析到此完成。</li>
+<li>如果浏览器自身的缓存里面没有找到对应的条目，那么会尝试读取操作系统的hosts文件看是否存在对应的映射关系,如果存在，则域名解析到此完成。</li>
+<li>如果本地hosts文件不存在映射关系，则查找本地DNS服务器(ISP服务器,或者自己手动设置的DNS服务器),如果存在,域名到此解析完成。</li>
+<li>如果本地DNS服务器还没找到的话,它就会向根服务器发出请求,进行递归查询</li>
+</ul>
+<h3 id="memory-cache（本地缓存）"><a href="#memory-cache（本地缓存）" class="headerlink" title="memory cache（本地缓存）"></a>memory cache（本地缓存）</h3><p>memory cache 是浏览器为了加快读取缓存速度而进行的自身的优化行为，<strong>不受开发者控制，也不受 HTTP 协议头的约束</strong>。当资源被存入内存后，下次同样的请求将不再通过网络，而是直接访问内存，当关闭该页面时，此资源就被内存释放掉了，再次重新打开相同页面时不再出现from memory cache的情况。</p>
+<p>那有人会问了，那什么时候资源会被放入memory缓存呢</p>
+<p>答案是几乎所有的网络请求资源都会根据相关的策略被浏览器自动加入到 memory cache 中。但是也正因为数量很大但是浏览器占用的内存不能无限扩大这样两个因素，memory cache 注定只能是个“<strong>短期存储</strong>”。<strong>当数据量过大，即使网页不关闭，缓存依然会失效</strong>。</p>
+<p>memory cache 机制保证了一个页面中如果有两个相同的请求 (例如两个 <code>src</code> 相同的 <code>&lt;img&gt;</code>，两个 <code>href</code> 相同的 <code>&lt;link&gt;</code>)都实际只会被请求最多一次，避免浪费。</p>
+<h3 id="disk-cache（HTTP缓存-x2F-硬盘缓存）"><a href="#disk-cache（HTTP缓存-x2F-硬盘缓存）" class="headerlink" title="disk cache（HTTP缓存 &#x2F; 硬盘缓存）"></a>disk cache（HTTP缓存 &#x2F; 硬盘缓存）</h3><p><em>硬盘缓存又叫HTTP缓存，它也是浏览器缓存中最重要的内容。因为你想啊，DNS缓存它主要是做一个ip地址查找并且是自主完成的，memory cache 也是不受控制，算是一个黑盒。所以剩下的可以受我们控制的硬盘缓存的重要性就不言而喻了，大多优化手段也是针对硬盘缓存。</em></p>
+<p><strong>HTTP缓存分为强制缓存和协商缓存</strong></p>
+<h4 id="强制缓存（强缓存）"><a href="#强制缓存（强缓存）" class="headerlink" title="强制缓存（强缓存）"></a>强制缓存（强缓存）</h4><p>对于强缓存，控制它的字段分别是：<code>Expires</code>和<code>Cache-Control</code>，其中<code>Cache-Control</code>优先级比<code>Expires</code>高</p>
+<p>当一个客户端发出一个请求到服务器，服务器希望你把资源缓存起来，于是在响应头中加入了这些内容</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Cache</span>-<span class="title class_">Control</span>: max-age=<span class="number">3600</span>  <span class="comment">// 我希望你把这个资源缓存起来，缓存时间是3600秒（1小时）</span></span><br><span class="line"><span class="title class_">Expires</span>: <span class="title class_">Thu</span>, <span class="number">10</span> <span class="title class_">Nov</span> <span class="number">2020</span> <span class="number">08</span>:<span class="number">45</span>:<span class="number">11</span> <span class="variable constant_">GMT</span>  <span class="comment">// 到达指定时间过期</span></span><br><span class="line"><span class="title class_">Date</span>: <span class="title class_">Thu</span>, <span class="number">30</span> <span class="title class_">Apr</span> <span class="number">2020</span> <span class="number">12</span>:<span class="number">39</span>:<span class="number">56</span> <span class="variable constant_">GMT</span></span><br><span class="line"><span class="title class_">Etag</span>:W/<span class="string">&quot;121-171ca289ebf&quot;</span>， <span class="comment">// (后面协商缓存内容)这个资源的编号是W/&quot;121-171ca289ebf&quot;</span></span><br><span class="line"><span class="title class_">Last</span>-<span class="title class_">Modified</span>:<span class="title class_">Thu</span>, <span class="number">30</span> <span class="title class_">Apr</span> <span class="number">2020</span> <span class="number">08</span>:<span class="number">16</span>:<span class="number">31</span> <span class="variable constant_">GMT</span>， <span class="comment">// (后面协商缓存内容)这个资源的上一次修改时间</span></span><br></pre></td></tr></table></figure>
+
+<p>浏览器收到这个响应之后就会做下面的事情</p>
+<ul>
+<li>浏览器把这次请求得到的响应体缓存到本地文件中</li>
+<li>浏览器标记这次请求的请求方法和请求路径</li>
+<li>浏览器标记这次缓存的时间是3600秒</li>
+<li>浏览器记录服务器的响应时间是格林威治时间<code>2020-04-30 12:39:56</code></li>
+</ul>
+<p>这一次的记录非常重要，它为以后浏览器要不要去请求服务器提供了依据。</p>
+<p>之后当客户端收准备再次请求同样的地址时，它突然想起了一件事：我需要的东西在不在缓存里呢？</p>
+<p><img src="/images/cache1.png" alt="img"></p>
+<p>判断缓存是否有效就是通过把<code>max-age + Date</code>，得到一个过期时间，看看这个过期时间是否大于当前时间，如果是，则表示缓存还没有过期，仍然有效，如果不是，则表示缓存失效。</p>
+<h4 id="协商缓存"><a href="#协商缓存" class="headerlink" title="协商缓存"></a>协商缓存</h4><p>一旦发现缓存无效，它<strong>并不会简单的把缓存删除</strong>，而是抱着一丝希望，想问问服务器，我<strong>这个缓存还能继续使用吗</strong>？</p>
+<p>于是，浏览器向服务器发出了一个<strong>带缓存的请求</strong></p>
+<p>所谓带缓存的请求，无非就是加入了以下的请求头：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">If</span>-<span class="title class_">Modified</span>-<span class="title class_">Since</span>: <span class="title class_">Thu</span>, <span class="number">30</span> <span class="title class_">Apr</span> <span class="number">2020</span> <span class="number">08</span>:<span class="number">16</span>:<span class="number">31</span> <span class="variable constant_">GMT</span>   <span class="comment">// 亲，你曾经告诉我，这个资源的上一次修改时间是格林威治时间2020-04-30 08:16:31，请问这个资源在这个时间之后有发生变动吗？</span></span><br><span class="line"><span class="title class_">If</span>-<span class="title class_">None</span>-<span class="title class_">Match</span>: W/<span class="string">&quot;121-171ca289ebf&quot;</span>   <span class="comment">// 亲，你曾经告诉我，这个资源的编号是W/&quot;121-171ca289ebf，请问这个资源的编号发生变动了吗？</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>之所以要发两个信息，是为了兼容不同的服务器，因为有些服务器只认<code>If-Modified-Since</code>，有些服务器只认<code>If-None-Match</code>，有些服务器两个都认,但是一般来说 <code>If-None-Match </code>的优先级高于 <code>If-Modified-Since</code></p>
+<p><strong>此时可能会产生两个结果</strong></p>
+<ul>
+<li><strong>缓存失效：</strong>那么非常简单，服务器再次给予一个正常的响应（响应码<code>200</code> 带响应体），同时可以附带上新的缓存指令，浏览器缓存新的内容</li>
+<li><strong>缓存有效：</strong>服务器返回304重定向，并且响应头带上新的缓存指令，浏览器作出相应缓存动作。</li>
+</ul>
+<p><img src="/images/cache2.png" alt="img"></p>
+<h3 id="补充（关键字段值）"><a href="#补充（关键字段值）" class="headerlink" title="补充（关键字段值）"></a>补充（关键字段值）</h3><h4 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h4><p>在上述的讲解中，<code>Cache-Control</code>是服务器向客户端响应的一个消息头，它提供了一个<code>max-age</code>用于指定缓存时间。</p>
+<p>实际上，<code>Cache-Control</code>还可以设置下面一个或多个值：</p>
+<ul>
+<li><code>public</code>：指示服务器资源是公开的。比如有一个页面资源，所有人看到的都是一样的。这个值对于浏览器而言没有什么意义，但可能在某些场景可能有用。本着「我告知，你随意」的原则，<code>http</code>协议中很多时候都是客户端或服务器告诉另一端详细的信息，至于另一端用不用，完全看它自己。</li>
+<li><code>private</code>：指示服务器资源是私有的。比如有一个页面资源，每个用户看到的都不一样。这个值对于浏览器而言没有什么意义，但可能在某些场景可能有用。本着「我告知，你随意」的原则，<code>http</code>协议中很多时候都是客户端或服务器告诉另一端详细的信息，至于另一端用不用，完全看它自己。</li>
+<li><code>no-cache</code>：告知客户端，你可以缓存这个资源，但是不要<strong>直接</strong>使用它。当你缓存之后，后续的每一次请求都需要附带缓存指令，让服务器告诉你这个资源有没有过期。</li>
+<li><code>no-store</code>：告知客户端，不要对这个资源做任何的缓存，之后的每一次请求都按照正常的普通请求进行。若设置了这个值，浏览器将不会对该资源做出任何的缓存处理。</li>
+<li><code>max-age</code>：不再赘述</li>
+</ul>
+<p>比如，<code>Cache-Control: public, max-age=3600</code>表示这是一个公开资源，请缓存1个小时。</p>
+<p>不仅仅是在响应头中出现，在<code>http1.1</code>版本中，也可以在<strong>请求头</strong>中加入<code>Cache-Control: no-cache，</code>它的含义是向服务器表达：不要考虑任何缓存，给我一个正常的结果。这和<code>http1.0</code>版本的消息头字段pragma是一样的功能。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>当浏览器再次访问一个已经访问过的资源时，它会这样做：</p>
+<ol>
+<li>根据相关字段判断是否命中强缓存，如果命中，就直接使用缓存了。</li>
+<li>如果没有命中强缓存，就发请求到服务器检查是否命中协商缓存。</li>
+<li>如果命中协商缓存，服务器会返回 304 告诉浏览器使用本地缓存。</li>
+<li>否则，返回最新的资源。</li>
+</ol>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6888875643266662414">https://juejin.cn/post/6888875643266662414</a></p>
+<br>
+
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/87588374">https://zhuanlan.zhihu.com/p/87588374</a></p>
+</blockquote>
+<p><br><br></p>
+
+        
+            <div id="toc-article">
+                
+  <div class="widget-wrap" id="toc-wrap">
+    <h3 class="widget-title"><i class="fa fa-toc"></i> 文章目录</h3>
+    <div class="widget">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS%E7%BC%93%E5%AD%98"><span class="toc-text">DNS缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#memory-cache%EF%BC%88%E6%9C%AC%E5%9C%B0%E7%BC%93%E5%AD%98%EF%BC%89"><span class="toc-text">memory cache（本地缓存）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#disk-cache%EF%BC%88HTTP%E7%BC%93%E5%AD%98-x2F-%E7%A1%AC%E7%9B%98%E7%BC%93%E5%AD%98%EF%BC%89"><span class="toc-text">disk cache（HTTP缓存 &#x2F; 硬盘缓存）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%BA%E5%88%B6%E7%BC%93%E5%AD%98%EF%BC%88%E5%BC%BA%E7%BC%93%E5%AD%98%EF%BC%89"><span class="toc-text">强制缓存（强缓存）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%8F%E5%95%86%E7%BC%93%E5%AD%98"><span class="toc-text">协商缓存</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%EF%BC%88%E5%85%B3%E9%94%AE%E5%AD%97%E6%AE%B5%E5%80%BC%EF%BC%89"><span class="toc-text">补充（关键字段值）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Cache-Control"><span class="toc-text">Cache-Control</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+    </div>
+  </div>
+
+
+            </div>
+        
+        
+          <blockquote id="copyright">
+              <p>原文链接: <a href="https://www.runsa.top/2021/08/02/cache/">https://www.runsa.top/2021/08/02/cache/</a></p>
+              <p>版权声明: 转载请注明出处.</p>
+          </blockquote>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div class="article-tag-wrap">
+          
+
+          
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-%E7%BC%93%E5%AD%98-cache/" rel="tag">浏览器 缓存 cache</a></li></ul>
+
+          
+    <div class="social-share">
+      <span>分享到:</span>
+    </div>
+
+
+
+        </div>
+      
+      
+        
+<nav id="article-nav">
+  
+    <a href="/2021/07/30/firstPost/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">older</strong>
+      <div class="article-nav-title">
+        
+          JS函数执行过程
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/08/11/closure/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">newer</strong>
+      <div class="article-nav-title">
+        
+          闭包详解
+        
+      </div>
+    </a>
+  
+</nav>
+
+      
+      
+        
+
+
+
+
+
+
+
+
+      
+    </footer>
+  </div>
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-posts"></i> 最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/06/22/es6/">ES6的应用</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/06/hash/">Hash &amp; History</a>
+          </li>
+        
+          <li>
+            <a href="/2021/10/18/journey/">journey</a>
+          </li>
+        
+          <li>
+            <a href="/2021/08/26/web-interview/">前端面试(不断更新)</a>
+          </li>
+        
+          <li>
+            <a href="/2021/08/25/scope/">作用域与执行上下文</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Hash-History-Router/" style="font-size: 10px;">Hash History Router</a> <a href="/tags/JS-%E5%87%BD%E6%95%B0-%E6%89%A7%E8%A1%8C-%E5%8E%9F%E7%90%86-%E4%B8%8A%E4%B8%8B%E6%96%87-%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">JS 函数 执行 原理 上下文 前端</a> <a href="/tags/http-%E5%8D%8F%E8%AE%AE/" style="font-size: 10px;">http 协议</a> <a href="/tags/scope-%E5%8F%98%E9%87%8F-%E4%BD%9C%E7%94%A8%E5%9F%9F-%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87-%E4%B8%8A%E4%B8%8B%E6%96%87/" style="font-size: 10px;">scope 变量 作用域 执行上下文 上下文</a> <a href="/tags/%E5%8E%86%E7%A8%8B-%E6%97%A5%E8%AE%B0-journey-%E7%BB%8F%E5%8E%86/" style="font-size: 10px;">历程 日记 journey 经历</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-%E7%BC%93%E5%AD%98-cache/" style="font-size: 10px;">浏览器 缓存 cache</a> <a href="/tags/%E9%97%AD%E5%8C%85-%E5%87%BD%E6%95%B0-JS-%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">闭包 函数 JS 前端</a> <a href="/tags/%E9%9D%A2%E8%AF%95-web-%E9%A2%98-%E9%A2%98%E5%BA%93/" style="font-size: 10px;">面试 web 题 题库</a>
+    </div>
+  </div>
+
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-archive"></i> 归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021年</a><span class="archive-list-count">7</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hash-History-Router/" rel="tag">Hash History Router</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JS-%E5%87%BD%E6%95%B0-%E6%89%A7%E8%A1%8C-%E5%8E%9F%E7%90%86-%E4%B8%8A%E4%B8%8B%E6%96%87-%E5%89%8D%E7%AB%AF/" rel="tag">JS 函数 执行 原理 上下文 前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http-%E5%8D%8F%E8%AE%AE/" rel="tag">http 协议</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scope-%E5%8F%98%E9%87%8F-%E4%BD%9C%E7%94%A8%E5%9F%9F-%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87-%E4%B8%8A%E4%B8%8B%E6%96%87/" rel="tag">scope 变量 作用域 执行上下文 上下文</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%86%E7%A8%8B-%E6%97%A5%E8%AE%B0-journey-%E7%BB%8F%E5%8E%86/" rel="tag">历程 日记 journey 经历</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-%E7%BC%93%E5%AD%98-cache/" rel="tag">浏览器 缓存 cache</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%97%AD%E5%8C%85-%E5%87%BD%E6%95%B0-JS-%E5%89%8D%E7%AB%AF/" rel="tag">闭包 函数 JS 前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95-web-%E9%A2%98-%E9%A2%98%E5%BA%93/" rel="tag">面试 web 题 题库</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-link"></i> 友情链接</h3>
+    <div class="widget">
+      <ul>
+      
+        <li>
+          <a target="_blank" rel="noopener" href="https://github.com/WangHutu">Github</a>
+        </li>
+      
+      </ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <a id="totop" href="#top"></a>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <p>
+        <a href="/sitemap.xml">网站地图</a>
+        <span> | </span><a href="/atom.xml">订阅本站</a>
+        <span> | </span><a href="/about/">联系博主</a>
+      </p>
+      
+        <p>
+          <i class="fa fa-visitors"></i>
+          <i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>
+          ，
+          <i class="fa fa-views"></i>
+          <i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>
+        </p>
+      
+      <p>
+        <!-- <span>Copyright &copy; 2023 Runfeng Wang.</span> -->
+        <span>备案号 <a href="https://beian.miit.gov.cn/" target="_blank">京ICP备2021007399号-1</a></span>
+        <span>Theme by <a href="https://github.com/chaooo/hexo-theme-BlueLake/" target="_blank">BlueLake.</a></span>
+        <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo.</a></span>
+      </p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </div>
+  
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+<script src="/js/search.json.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+  
+<script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+    
+<script src="/localshare/js/social-share.js"></script>
+
+    
+<script src="/localshare/js/qrcode.js"></script>
+
+  
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+
+
+
+
+</body>
+</html>
